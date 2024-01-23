@@ -1,0 +1,200 @@
+/*
+  Icon Font: WakaFont
+*/
+
+@font-face {
+  font-family: "WakaFont";
+  src: url("../fonts/WakaFont.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  @font-face {
+    font-family: "WakaFont";
+    src: url("../fonts/WakaFont.ttf");
+  }
+}
+
+[data-icon]:before {
+  content: attr(data-icon);
+}
+
+[data-icon]:before,
+.radical-bar:before,
+.radical-bear:before,
+.radical-beggar:before,
+.radical-blackjack:before,
+.radical-cactus:before,
+.radical-cape:before,
+.radical-chinese:before,
+.radical-cleat:before,
+.radical-comb:before,
+.radical-coral:before,
+.radical-corn:before,
+.radical-creeper:before,
+.radical-death-star:before,
+.radical-egg:before,
+.radical-elf:before,
+.radical-explosion:before,
+.radical-gladiator:before,
+.radical-grass:before,
+.radical-gun:before,
+.radical-hat:before,
+.radical-hills:before,
+.radical-horns:before,
+.radical-kick:before,
+.radical-leaf:before,
+.radical-morning:before,
+.radical-pope:before,
+.radical-psychopath:before,
+.radical-satellite:before,
+.radical-spikes:before,
+.radical-spring:before,
+.radical-squid:before,
+.radical-stick:before,
+.radical-tofu:before,
+.radical-trash:before,
+.radical-triceratops:before,
+.radical-trident:before,
+.radical-viking:before,
+.radical-worm:before,
+.radical-yurt:before,
+.radical-zombie:before {
+  display: inline-block;
+  font-family: "WakaFont";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.radical-bar:before {
+  content: "\f102";
+}
+.radical-bear:before {
+  content: "\f103";
+}
+.radical-beggar:before {
+  content: "\f104";
+}
+.radical-blackjack:before {
+  content: "\f106";
+}
+.radical-cactus:before {
+  content: "\f10a";
+}
+.radical-cape:before {
+  content: "\f110";
+}
+.radical-chinese:before {
+  content: "\f10d";
+}
+.radical-cleat:before {
+  content: "\f10f";
+}
+.radical-comb:before {
+  content: "\f113";
+}
+.radical-coral:before {
+  content: "\f13e";
+}
+.radical-corn:before {
+  content: "\f114";
+}
+.radical-creeper:before {
+  content: "\f116";
+}
+.radical-death-star:before {
+  content: "\f117";
+}
+.radical-egg:before {
+  content: "\f118";
+}
+.radical-elf:before {
+  content: "\f155";
+}
+.radical-explosion:before {
+  content: "\f119";
+}
+.radical-gladiator:before {
+  content: "\f157";
+}
+.radical-grass:before {
+  content: "\f121";
+}
+.radical-gun:before {
+  content: "\f123";
+}
+.radical-hat:before {
+  content: "\f124";
+}
+.radical-hills:before {
+  content: "\f127";
+}
+.radical-horns:before {
+  content: "\f128";
+}
+.radical-kick:before {
+  content: "\f12a";
+}
+.radical-leaf:before {
+  content: "\f12c";
+}
+.radical-morning:before {
+  content: "\f12e";
+}
+.radical-pope:before {
+  content: "\f135";
+}
+.radical-psychopath:before {
+  content: "\f138";
+}
+.radical-saw:before {
+  content: "\f148";
+}
+.radical-satellite:before {
+  content: "\f156";
+}
+.radical-spikes:before {
+  content: "\f144";
+}
+.radical-spring:before {
+  content: "\f14b";
+}
+.radical-squid:before {
+  content: "\f146";
+}
+.radical-stick:before {
+  content: "\f147";
+}
+.radical-tofu:before {
+  content: "\f149";
+}
+.radical-trash:before {
+  content: "\f107";
+}
+.radical-triceratops:before {
+  content: "\f14c";
+}
+.radical-trident:before {
+  content: "\f14d";
+}
+.radical-viking:before {
+  content: "\f150";
+}
+.radical-worm:before {
+  content: "\f153";
+}
+.radical-yurt:before {
+  content: "\f126";
+}
+.radical-zombie:before {
+  content: "\f154";
+}
