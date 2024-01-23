@@ -4,8 +4,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "KanjiOcean",
-  "short_name": "KanjiOcean",
+  "name": "KanjiDive",
+  "short_name": "KanjiDive",
   "icons": [
     {
       "src": "/icon-192x192.png",
