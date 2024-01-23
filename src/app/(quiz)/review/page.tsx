@@ -19,6 +19,8 @@ export default async function Page() {
     isMeaningIncorrect: false,
     localWrongStreak: x.wrongStreak,
     localStage: x.stage,
+    testingReading: Math.random() > 0.5,
+    correctCount: 0,
   }));
 
   return <ReviewQuizSlides cards={slideCards} />;

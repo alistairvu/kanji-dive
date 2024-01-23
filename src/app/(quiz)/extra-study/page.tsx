@@ -19,6 +19,8 @@ export default async function Page() {
     isMeaningIncorrect: false,
     localWrongStreak: 0,
     localStage: x.stage,
+    testingReading: Math.random() > 0.5,
+    correctCount: 0,
   }));
 
   shuffleArray(slideCards);

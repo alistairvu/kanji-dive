@@ -9,4 +9,6 @@ type CardWithStatus = CardWithNote & {
   isMeaningIncorrect: boolean;
   localWrongStreak: number;
   localStage: number;
+  testingReading: boolean;
+  correctCount: number;
 };

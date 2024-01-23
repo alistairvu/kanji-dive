@@ -26,7 +26,6 @@ export function QuizSlides({
   registerCorrect,
   registerIncorrect,
   showCardStage,
-  isPractice,
 }: QuizSlidesProps) {
   const [queue, setQueue] = useState(cards);
 
@@ -60,6 +59,109 @@ export function QuizSlides({
     }
   }
 
+  /**
+   * Allows moving onto the next card
+   */
+  async function moveToNextCard(isCorrect: boolean) {
+    if (currentCard === undefined) {
+      return;
+    }
+
+    setAnswerState("ANSWERING");
+    setAnswer("");
+    setShowInfo(false);
+
+    // Move onto the next item
+    // Swap testing types
+    // We only test meanings for radical items
+    if (currentCard.note.readings.length > 0) {
+      // First case: we have answered correctly
+      if (isCorrect) {
+        currentCard.correctCount++;
+
+        // We're done, it's correct the entire way through
+        if (currentCard.correctCount === 2) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const [_, ...rest] = queue;
+          const newQueue = [...rest];
+          setQueue(newQueue);
+          setTestingReading(newQueue[0]?.testingReading ?? false);
+
+          if (registerCorrect) {
+            await registerCorrect(currentCard?.id ?? "");
+            await utils.lesson.countLessons.invalidate();
+            await utils.review.countReviews.invalidate();
+          }
+          // We're actually not done!
+        } else {
+          currentCard.testingReading = !currentCard.testingReading;
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const [_, ...rest] = queue;
+          rest.splice(
+            Math.floor(Math.random() * Math.min(rest.length, 10)),
+            0,
+            currentCard,
+          );
+          setQueue(rest);
+          setTestingReading(rest[0]?.testingReading ?? false);
+        }
+      } else {
+        // Second case: we've answered incorrectly
+        if (registerIncorrect) {
+          await registerIncorrect(currentCard.id, 1);
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, ...rest] = queue;
+        rest.splice(
+          Math.floor(Math.random() * Math.min(rest.length, 10)),
+          0,
+          currentCard,
+        );
+        setQueue(rest);
+        setTestingReading(rest[0]?.testingReading ?? false);
+      }
+
+      // RADICAL Items
+    } else {
+      // First case: we have answered correctly
+      if (isCorrect) {
+        currentCard.correctCount++;
+
+        // We're done, it's correct the entire way through
+        if (currentCard.correctCount === 1) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const [_, ...rest] = queue;
+          const newQueue = [...rest];
+          setQueue(newQueue);
+          setTestingReading(newQueue[0]?.testingReading ?? false);
+
+          if (registerCorrect) {
+            await registerCorrect(currentCard?.id ?? "");
+            await utils.lesson.countLessons.invalidate();
+            await utils.review.countReviews.invalidate();
+          }
+          // We're actually not done!
+        }
+      } else {
+        // Second case: we've answered incorrectly
+        if (registerIncorrect) {
+          await registerIncorrect(currentCard.id, 1);
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, ...rest] = queue;
+        rest.splice(
+          Math.floor(Math.random() * Math.min(rest.length, 10)),
+          0,
+          currentCard,
+        );
+        setQueue(rest);
+        setTestingReading(rest[0]?.testingReading ?? false);
+      }
+    }
+  }
+
   // Handles what happens when user presses next
   async function handleNext() {
     if (answer.trim().length === 0) {
@@ -75,38 +177,7 @@ export function QuizSlides({
       const correct = verifyAnswer();
 
       if (correct) {
-        setAnswerState("ANSWERING");
-        setAnswer("");
-        setShowInfo(false);
-
-        // We swap testing type if we're correct
-        setTestingReading((val) => !val);
-
-        // If answered correctly, we mark as incorrect
-        if (testingReading) {
-          // Move to the back if card is incorrectly answered.
-          const [first, ...rest] = queue;
-          const isIncorrect =
-            currentCard.isMeaningIncorrect || currentCard.isReadingIncorrect;
-          const newQueue =
-            isIncorrect && !isPractice ? [...rest, first!] : [...rest];
-          setQueue(newQueue);
-
-          if (isIncorrect) {
-            if (registerIncorrect) {
-              await registerIncorrect(currentCard.id, 1);
-            }
-          } else {
-            if (registerCorrect) {
-              await registerCorrect(currentCard?.id ?? "");
-              await utils.lesson.countLessons.invalidate();
-              await utils.review.countReviews.invalidate();
-            }
-          }
-
-          currentCard.isReadingIncorrect = false;
-          currentCard.isMeaningIncorrect = false;
-        }
+        await moveToNextCard(true);
       } else {
         setShowInfo(true);
         currentCard.localWrongStreak += 1;
@@ -123,9 +194,7 @@ export function QuizSlides({
       return;
     }
 
-    setAnswerState("ANSWERING");
-    setAnswer("");
-    setShowInfo(false);
+    await moveToNextCard(false);
   }
 
   if (currentCard === undefined) {
