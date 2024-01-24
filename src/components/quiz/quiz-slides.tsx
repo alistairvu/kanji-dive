@@ -73,41 +73,26 @@ export function QuizSlides({
 
     const WRAP_LENGTH = 10;
 
-    // Move onto the next item
-    // Swap testing types
-    // We only test meanings for radical items
-    if (currentCard.note.readings.length > 0) {
-      // First case: we have answered correctly
-      if (isCorrect) {
-        currentCard.correctCount++;
+    // First case: we have answered correctly
+    if (isCorrect) {
+      currentCard.correctCount++;
 
-        // We're done, it's correct the entire way through
-        if (currentCard.correctCount === 2) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const [_, ...rest] = queue;
-          const newQueue = [...rest];
-          setQueue(newQueue);
-          setTestingReading(newQueue[0]?.testingReading ?? false);
+      // We're done, it's correct the entire way through
+      if (currentCard.correctCount === 2) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, ...rest] = queue;
+        const newQueue = [...rest];
+        setQueue(newQueue);
+        setTestingReading(newQueue[0]?.testingReading ?? false);
 
-          if (registerCorrect) {
-            await registerCorrect(currentCard?.id ?? "");
-            await utils.lesson.countLessons.invalidate();
-            await utils.review.countReviews.invalidate();
-          }
-          // We're actually not done!
-        } else {
-          currentCard.testingReading = !currentCard.testingReading;
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const [_, ...rest] = queue;
-          rest.splice(
-            Math.floor(Math.random() * Math.min(rest.length, WRAP_LENGTH)),
-            0,
-            currentCard,
-          );
-          setQueue(rest);
-          setTestingReading(rest[0]?.testingReading ?? false);
+        if (registerCorrect) {
+          await registerCorrect(currentCard?.id ?? "");
+          await utils.lesson.countLessons.invalidate();
+          await utils.review.countReviews.invalidate();
         }
+        // We're actually not done!
       } else {
+        currentCard.testingReading = !currentCard.testingReading;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, ...rest] = queue;
         rest.splice(
@@ -117,49 +102,21 @@ export function QuizSlides({
         );
         setQueue(rest);
         setTestingReading(rest[0]?.testingReading ?? false);
-
-        // Second case: we've answered incorrectly
-        if (registerIncorrect) {
-          await registerIncorrect(currentCard.id, 1);
-        }
       }
-
-      // RADICAL Items
     } else {
-      // First case: we have answered correctly
-      if (isCorrect) {
-        currentCard.correctCount++;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [_, ...rest] = queue;
+      rest.splice(
+        Math.floor(Math.random() * Math.min(rest.length, WRAP_LENGTH)),
+        0,
+        currentCard,
+      );
+      setQueue(rest);
+      setTestingReading(rest[0]?.testingReading ?? false);
 
-        // We're done, it's correct the entire way through
-        if (currentCard.correctCount === 1) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const [_, ...rest] = queue;
-          const newQueue = [...rest];
-          setQueue(newQueue);
-          setTestingReading(newQueue[0]?.testingReading ?? false);
-
-          if (registerCorrect) {
-            await registerCorrect(currentCard?.id ?? "");
-            await utils.lesson.countLessons.invalidate();
-            await utils.review.countReviews.invalidate();
-          }
-          // We're actually not done!
-        }
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [_, ...rest] = queue;
-        rest.splice(
-          Math.floor(Math.random() * Math.min(rest.length, WRAP_LENGTH)),
-          0,
-          currentCard,
-        );
-        setQueue(rest);
-        setTestingReading(rest[0]?.testingReading ?? false);
-
-        // Second case: we've answered incorrectly
-        if (registerIncorrect) {
-          await registerIncorrect(currentCard.id, 1);
-        }
+      // Second case: we've answered incorrectly
+      if (registerIncorrect) {
+        await registerIncorrect(currentCard.id, 1);
       }
     }
   }
