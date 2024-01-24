@@ -71,6 +71,8 @@ export function QuizSlides({
     setAnswer("");
     setShowInfo(false);
 
+    const WRAP_LENGTH = 10;
+
     // Move onto the next item
     // Swap testing types
     // We only test meanings for radical items
@@ -98,7 +100,7 @@ export function QuizSlides({
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const [_, ...rest] = queue;
           rest.splice(
-            Math.floor(Math.random() * Math.min(rest.length, 10)),
+            Math.floor(Math.random() * Math.min(rest.length, WRAP_LENGTH)),
             0,
             currentCard,
           );
@@ -106,20 +108,20 @@ export function QuizSlides({
           setTestingReading(rest[0]?.testingReading ?? false);
         }
       } else {
-        // Second case: we've answered incorrectly
-        if (registerIncorrect) {
-          await registerIncorrect(currentCard.id, 1);
-        }
-
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, ...rest] = queue;
         rest.splice(
-          Math.floor(Math.random() * Math.min(rest.length, 10)),
+          Math.floor(Math.random() * Math.min(rest.length, WRAP_LENGTH)),
           0,
           currentCard,
         );
         setQueue(rest);
         setTestingReading(rest[0]?.testingReading ?? false);
+
+        // Second case: we've answered incorrectly
+        if (registerIncorrect) {
+          await registerIncorrect(currentCard.id, 1);
+        }
       }
 
       // RADICAL Items
@@ -144,20 +146,20 @@ export function QuizSlides({
           // We're actually not done!
         }
       } else {
-        // Second case: we've answered incorrectly
-        if (registerIncorrect) {
-          await registerIncorrect(currentCard.id, 1);
-        }
-
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, ...rest] = queue;
         rest.splice(
-          Math.floor(Math.random() * Math.min(rest.length, 10)),
+          Math.floor(Math.random() * Math.min(rest.length, WRAP_LENGTH)),
           0,
           currentCard,
         );
         setQueue(rest);
         setTestingReading(rest[0]?.testingReading ?? false);
+
+        // Second case: we've answered incorrectly
+        if (registerIncorrect) {
+          await registerIncorrect(currentCard.id, 1);
+        }
       }
     }
   }
